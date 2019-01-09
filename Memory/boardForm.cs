@@ -171,6 +171,8 @@ namespace Memory
             /* 
              * Fill the picture boxes with filenames
              * Shuffle the cards
+             *      Create a for loop that counts through the picturebox object names
+             *      Assign
              * Load all of the card backs - 
              *      While you're testing you might want to load all of card faces
              *      to make sure that the cards are loaded successfully and that
