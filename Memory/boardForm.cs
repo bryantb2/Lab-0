@@ -20,10 +20,19 @@ namespace Memory
         #region Instance Variables
         const int NOT_PICKED_YET = -1;
 
+        string[] values = { "a", "2", "j", "q", "k" };
+        string[] suits = { "c", "d", "h", "s" };
+
         int firstCardNumber = NOT_PICKED_YET;
         int secondCardNumber = NOT_PICKED_YET;
         int matches = 0;
+        int SIZE = 21;
         #endregion
+
+
+
+
+
 
         #region Methods
 
@@ -53,6 +62,11 @@ namespace Memory
             GetCard(i).Tag = filename;
         }
 
+
+
+
+
+
         // These 2 methods get the value (and suit) of the card in a given picturebox
         // Both methods take an integer as the parameter and return a string
         private string GetCardValue(int index)
@@ -60,22 +74,28 @@ namespace Memory
             return GetCardFilename(index).Substring(4, 1);
         }
 
+        
         private string GetCardSuit(int index)
         {
             return GetCardFilename(index).Substring(5, 1);
         }
+        
 
         // TODO:  students should write this one
         private bool IsMatch(int index1, int index2)
         {
-            return true;
+            if (GetCardValue(index1) == GetCardValue(index2))
+            {
+                return true;
+            }
+            return false;
         }
 
         // This method fills each picture box with a filename
         private void FillCardFilenames()
         {
-            string[] values = { "a", "2", "j", "q", "k" };
-            string[] suits = { "c", "d", "h", "s" };
+           /* string[] values = { "a", "2", "j", "q", "k" };
+            string[] suits = { "c", "d", "h", "s" }; */
             int i = 1;
 
             for (int suit = 0; suit <= 3; suit++)
@@ -88,10 +108,35 @@ namespace Memory
             }
         }
 
+
+
+
+
+
+
         // TODO:  students should write this one
         private void ShuffleCards()
         {
+            Random generator = new Random();
+            int index1, index2;
+
+            for (int i = 0; i <= 20; i++)
+            {
+                //Generate random number and use it to target index of fillcard array
+                index1 = generator.Next(0, 6);
+                index2 = generator.Next(0, 5);
+                SetCardFilename(i, "card" + values[index1] + suits[index2] + ".jpg");
+                //Assign arrary index values to an image filename
+                //Get the card number from the form
+                //Get a random image file by using a random number generator
+                //Assign the random image file to the card
+            }
         }
+
+
+
+
+
 
         // This method loads (shows) an image in a picture box.  Assumes that filenames
         // have been filled in an earlier call to FillCardFilenames
@@ -112,58 +157,94 @@ namespace Memory
         // shows (loads) the backs of all of the cards
         private void LoadAllCardBacks()
         {
-
+            for (int i = 0; i <= 20; i++)
+            {
+                LoadCardBack(i);
+            }
         }
 
         // Hides a picture box
         private void HideCard(int i)
         {
-
+            GetCard(i).Visible = false;
         }
 
         private void HideAllCards()
         {
-
+            for (int i = 0; i <= 20; i++)
+            {
+                GetCard(i).Visible = false;
+            }
         }
 
         // shows a picture box
         private void ShowCard(int i)
         {
-
+            LoadCard(i);
         }
 
         private void ShowAllCards()
         {
-
+            for (int i = 0; i <= 20; i++)
+            {
+                LoadCard(i);
+            }
         }
 
         // disables a picture box
         private void DisableCard(int i)
         {
-
+            PictureBox card = GetCard(i);
+            card.Click -= new System.EventHandler(this.card_Click);
         }
 
         private void DisableAllCards()
         {
-
+            for (int i = 0; i <= 20; i++)
+            {
+                PictureBox card = GetCard(i);
+                card.Click -= new System.EventHandler(this.card_Click);
+            }
         }
 
         private void EnableCard(int i)
         {
-
+            PictureBox card = GetCard(i);
+            card.Click += new System.EventHandler(this.card_Click);
         }
 
         private void EnableAllCards()
         {
-
+            for (int i = 0; i <= 20; i++)
+            {
+                PictureBox card = GetCard(i);
+                card.Click += new System.EventHandler(this.card_Click);
+            }
         }
     
         private void EnableAllVisibleCards()
         {
-
+            for (int i = 0; i <= 20; i++)
+            {
+               if (GetCard(i).Visible == true)
+                {
+                    PictureBox card = GetCard(i);
+                    card.Click += new System.EventHandler(this.card_Click);
+                }
+               else
+                {
+                    DisableCard(i);
+                }
+            }
         }
 
         #endregion
+
+
+
+
+
+
 
         #region EventHandlers
         private void boardForm_Load(object sender, EventArgs e)
@@ -178,6 +259,9 @@ namespace Memory
              *      to make sure that the cards are loaded successfully and that
              *      they're shuffled.  If you get all 2s, something is wrong.
             */
+            FillCardFilenames();
+            ShuffleCards();
+            LoadAllCardBacks();
         }
 
         private void card_Click(object sender, EventArgs e)
@@ -197,6 +281,7 @@ namespace Memory
              *      start the flip timer
              *  end if
             */
+            if ()
         }
 
         private void flipTimer_Tick(object sender, EventArgs e)

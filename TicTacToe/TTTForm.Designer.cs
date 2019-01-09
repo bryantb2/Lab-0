@@ -365,6 +365,11 @@
             this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.label25.Click += new System.EventHandler(this.label_Click);
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // TTTForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);

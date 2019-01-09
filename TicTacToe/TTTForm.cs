@@ -373,19 +373,7 @@ namespace TicTacToe
             {
                 DisableAllSquares();
                 timer1.Enabled = true;
-                
-               /* MakeComputerMove();
-                if (IsWinner(out winningDimension, out winningValue))
-                {
-                    DisableAllSquares();
-                    HighlightWinner("The Computer", winningDimension, winningValue);
-
-                }
-                else
-                {
-                    EnableAllEmptySquares();
-                } */
-            }
+            } 
             else
             {
                 resultLabel.Text = "It's a Tie!";
@@ -435,10 +423,13 @@ namespace TicTacToe
 
         private void newGameButton_Click(object sender, EventArgs e)
         {
+            ResetSquares();
+            resultLabel.Text = " ";
         }
 
         private void exitButton_Click(object sender, EventArgs e)
         {
+            this.Close();
         }
     }
 }
