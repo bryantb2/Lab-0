@@ -20,7 +20,7 @@ namespace Memory
         #region Instance Variables
         const int NOT_PICKED_YET = -1;
 
-        string[] values = { "a", "2", "j", "q", "k" };
+        string[] values = { "a", "2", "j", "q", "k", "3", "4", "5", "6", "7", "8", "9", "t" };
         string[] suits = { "c", "d", "h", "s" };
 
         int firstCardNumber = NOT_PICKED_YET;
@@ -120,11 +120,11 @@ namespace Memory
             Random generator = new Random();
             int index1, index2;
 
-            for (int i = 0; i <= 20; i++)
+            for (int i = 01; i < SIZE; i++)
             {
                 //Generate random number and use it to target index of fillcard array
-                index1 = generator.Next(0, 6);
-                index2 = generator.Next(0, 5);
+                index1 = generator.Next(0, 11);
+                index2 = generator.Next(0, 4);
                 SetCardFilename(i, "card" + values[index1] + suits[index2] + ".jpg");
                 //Assign arrary index values to an image filename
                 //Get the card number from the form
@@ -157,7 +157,7 @@ namespace Memory
         // shows (loads) the backs of all of the cards
         private void LoadAllCardBacks()
         {
-            for (int i = 0; i <= 20; i++)
+            for (int i = 1; i < SIZE; i++)
             {
                 LoadCardBack(i);
             }
@@ -171,7 +171,7 @@ namespace Memory
 
         private void HideAllCards()
         {
-            for (int i = 0; i <= 20; i++)
+            for (int i = 1; i < SIZE; i++)
             {
                 GetCard(i).Visible = false;
             }
@@ -185,7 +185,7 @@ namespace Memory
 
         private void ShowAllCards()
         {
-            for (int i = 0; i <= 20; i++)
+            for (int i = 1; i < SIZE; i++)
             {
                 LoadCard(i);
             }
@@ -200,7 +200,7 @@ namespace Memory
 
         private void DisableAllCards()
         {
-            for (int i = 0; i <= 20; i++)
+            for (int i = 1; i < SIZE; i++)
             {
                 PictureBox card = GetCard(i);
                 card.Click -= new System.EventHandler(this.card_Click);
@@ -215,7 +215,7 @@ namespace Memory
 
         private void EnableAllCards()
         {
-            for (int i = 0; i <= 20; i++)
+            for (int i = 1; i < SIZE; i++)
             {
                 PictureBox card = GetCard(i);
                 card.Click += new System.EventHandler(this.card_Click);
@@ -224,7 +224,7 @@ namespace Memory
     
         private void EnableAllVisibleCards()
         {
-            for (int i = 0; i <= 20; i++)
+            for (int i = 1; i < SIZE; i++)
             {
                if (GetCard(i).Visible == true)
                 {
@@ -281,7 +281,22 @@ namespace Memory
              *      start the flip timer
              *  end if
             */
-            if ()
+            if (firstCardNumber == NOT_PICKED_YET)
+            {
+                firstCardNumber = cardNumber;
+                string index1 = GetCardValue(firstCardNumber);
+                LoadCard(firstCardNumber);
+                DisableCard(firstCardNumber);
+            }
+            else
+            {
+                secondCardNumber = cardNumber;
+                string index2 = GetCardValue(secondCardNumber);
+                LoadCard(secondCardNumber);
+                DisableCard(secondCardNumber);
+                DisableAllCards();
+                flipTimer.Enabled = true;
+            }
         }
 
         private void flipTimer_Tick(object sender, EventArgs e)
@@ -307,6 +322,31 @@ namespace Memory
              *      enable all of the cards left on the board
              * end if
              */
+            flipTimer.Enabled = false;
+            if ((IsMatch(firstCardNumber, secondCardNumber)) == true)
+            {
+                matches += 1;
+                HideCard(firstCardNumber);
+                HideCard(secondCardNumber);
+                firstCardNumber = NOT_PICKED_YET;
+                secondCardNumber = NOT_PICKED_YET;
+                if (matches == 10)
+                {
+                    MessageBox.Show("You have finished the game!");
+                }
+                else
+                {
+                    EnableAllVisibleCards();
+                }
+            }
+            else
+            {
+                LoadCardBack(firstCardNumber);
+                LoadCardBack(secondCardNumber);
+                firstCardNumber = NOT_PICKED_YET;
+                secondCardNumber = NOT_PICKED_YET;
+                EnableAllCards();
+            }
         }
         #endregion
     }
