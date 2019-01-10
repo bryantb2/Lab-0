@@ -20,8 +20,8 @@ namespace Memory
         #region Instance Variables
         const int NOT_PICKED_YET = -1;
 
-        string[] values = { "a", "2", "j", "q", "k", "3", "4", "5", "6", "7", "8", "9", "t" };
-        string[] suits = { "c", "d", "h", "s" };
+        readonly string[] values = { "a", "2", "j", "q", "k", "3", "4", "5", "6", "7", "8", "9", "t" };
+        readonly string[] suits = { "c", "d", "h", "s" };
 
         int firstCardNumber = NOT_PICKED_YET;
         int secondCardNumber = NOT_PICKED_YET;
@@ -120,7 +120,7 @@ namespace Memory
             Random generator = new Random();
             int index1, index2;
 
-            for (int i = 01; i < SIZE; i++)
+            for (int i = 1; i < SIZE; i++)
             {
                 //Generate random number and use it to target index of fillcard array
                 index1 = generator.Next(0, 11);
@@ -293,7 +293,6 @@ namespace Memory
                 secondCardNumber = cardNumber;
                 string index2 = GetCardValue(secondCardNumber);
                 LoadCard(secondCardNumber);
-                DisableCard(secondCardNumber);
                 DisableAllCards();
                 flipTimer.Enabled = true;
             }
